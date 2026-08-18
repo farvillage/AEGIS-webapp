@@ -29,23 +29,59 @@ def load_model():
 model = load_model()
 
 # 3. File Uploader
+import pandas as pd
+import streamlit as st
+
 # Allow both PCAP and CSV for testing purposes
 uploaded_file = st.file_uploader(
-    "Upload Network Traffic Capture", 
+    "Upload Network Traffic Capture (.pcap) or Dataset (.csv)", 
     type=["pcap", "pcapng", "csv"]
 )
 
 if uploaded_file is not None:
+    # --- 1. HANDLE CSV UPLOADS ---
     if uploaded_file.name.endswith('.csv'):
-        # Load the CSV directly into a Pandas DataFrame and pass it to the model
-        import pandas as pd
-        df = pd.read_csv(uploaded_file)
-        st.success("CSV loaded! Ready for ML inference.")
-        # Insert your ML prediction code here
+        st.info("CSV detected. Bypassing packet parser and loading dataset...")
         
+        # Load the CSV directly into a Pandas DataFrame
+        df = pd.read_csv(uploaded_file)
+        
+        st.success(f"Successfully loaded {df.shape[0]} rows and {df.shape[1]} features!")
+        st.dataframe(df.head()) # Show a quick preview of the data in the UI
+        
+        # You can add your ML prediction logic for the CSV here later
+        
+    # --- 2. HANDLE PCAP UPLOADS ---
     elif uploaded_file.name.endswith(('.pcap', '.pcapng')):
-        # Run your normal pcap_parser.py logic
-        st.info("Parsing PCAP file...")
+        st.info("PCAP file detected. Parsing network packets...")
+        
+        # Scapy requires a physical file path to read, so we must save the upload temporarily
+        temp_file_path = f"temp_{uploaded_file.name}"
+        with open(temp_file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+            
+        with st.spinner("Extracting packets via Scapy..."):
+            df_packets = extract_features_from_pcap(temp_file_path)
+            
+        # Clean up the temporary file immediately after reading
+        import os
+        if os.path.exists(temp_file_path):
+            os.remove(temp_file_path)
+            
+        if not df_packets.empty:
+            st.write("### Raw Packet Extraction Preview:")
+            st.dataframe(df_packets.head())
+            
+            # --- FLOW AGGREGATION (Aegis Standard) ---
+            st.write("Aggregating packets into network flows...")
+            
+            df_flows = df_packets.groupby(
+                ['src_ip', 'dst_ip', 'src_port', 'dst_port', 'protocol']
+            ).agg(
+                total_packets=('packet_length', 'count'),
+                total_bytes=('packet_length', 'sum'),
+                # Add the rest of your aggregations here...
+            )
     
     with st.spinner("Extracting packets via Scapy..."):
         df_packets = extract_features_from_pcap(temp_file_path)
@@ -113,38 +149,3 @@ if uploaded_file is not None:
                     st.success("All network traffic flows classified as normal.")
     else:
         st.warning("No valid IP packets detected in the uploaded capture.")
-
-# 4. Styling
-# --- Force Custom UI Theme via CSS ---
-st.markdown(
-    """
-    <style>
-    /* Force main background and text color */
-    .stApp {
-        background-color: #0b0f19 !important;
-        color: #e2e8f0 !important;
-        font-family: monospace !important;
-    }
-    
-    /* Force sidebar background */
-    [data-testid="stSidebar"] {
-        background-color: #131b2e !important;
-    }
-    
-    /* Force sophisticated purple on buttons */
-    div.stButton > button:first-child {
-        background-color: #6B21A8 !important;
-        color: #ffffff !important;
-        border: 1px solid #6B21A8 !important;
-        font-family: monospace !important;
-    }
-    
-    /* Hover effect for buttons */
-    div.stButton > button:first-child:hover {
-        background-color: #8B5CF6 !important;
-        border: 1px solid #8B5CF6 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
