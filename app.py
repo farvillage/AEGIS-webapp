@@ -18,14 +18,14 @@ from pcap_parser import extract_features_from_pcap
 # This block sets up the browser tab properties and the default layout width
 icon = Image.open("aegisicon.png")
 st.set_page_config(
-    page_title="Aegis",
+    page_title="AEGIS",
     page_icon=icon,
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-## This block injects custom CSS directly into the HTML to override Streamlit defaults
 # --- 2. Targeted CSS to KILL all Blue, Toolbars, & Cloud Badges ---
+## This block injects custom CSS directly into the HTML to override Streamlit defaults
 st.markdown(
     """
     <style>
@@ -83,17 +83,17 @@ st.markdown(
 )
 # --- 3. Simple Header ---
 # The main title and description shown at the top of the page
-st.title("Aegis")
+st.title("AEGIS")
 st.markdown("Real-time intrusion detection for private 5G edge networks.")
 st.markdown("Upload raw network captures (`.pcap`) or processed datasets (`.csv`) from medical sensors to detect malicious behavioral anomalies instantly.")
 
 # --- 4. About Me (Sidebar) ---
 # Creates a collapsible sidebar section for developer information
 with st.sidebar:
-    st.markdown("## Navigation & Controls")
+    st.markdown("## About:")
     
     # An expander keeps the sidebar clean until the user clicks to read more
-    with st.expander("About the Developer"):
+    with st.expander("Who am I?"):
         st.markdown(
             """
             **Ygor Gesteira**  
@@ -101,7 +101,7 @@ with st.sidebar:
             
             Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Internet of Medical Things (IoMT) over private 5G networks.
             
-            *"I found it is the small everyday deeds of ordinary folk that keep the darkness at bay."* - J.R.R. Tolkien
+            *"With great power comes great responsibility"* - Stan Lee
             
             [ygorgesteira@gmail.com](mailto:ygorgesteira@gmail.com)
             """

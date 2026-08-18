@@ -1,9 +1,9 @@
-# Aegis
+# AEGIS
 
 Real-time intrusion detection for private 5G edge networks.
 
 ## Overview
-Aegis is a web-based threat intelligence platform designed to monitor and classify network traffic in Internet of Medical Things (IoMT) environments. It provides a streamlined interface to upload raw network captures or processed datasets, automatically extracting features and applying machine learning to detect malicious behavioral anomalies instantly.
+AEGIS is a web-based threat intelligence platform designed to monitor and classify network traffic in Internet of Medical Things (IoMT) environments. It provides a streamlined interface to upload raw network captures or processed datasets, automatically extracting features and applying machine learning to detect malicious behavioral anomalies instantly.
 
 ## Core Features
 * **Dual Input Support:** Process raw packet captures (`.pcap`, `.pcapng`) or pre-aggregated flow datasets (`.csv`).
@@ -39,7 +39,7 @@ Aegis is a web-based threat intelligence platform designed to monitor and classi
    ```
 
 ## About the Project
-Aegis is developed as part of ongoing Master's research at the Instituto Federal da Paraíba (IFPB). The project focuses on machine learning applications for cybersecurity, specifically addressing the unique constraints and behavioral patterns of IoMT devices operating over private 5G networks.
+AEGIS is developed as part of ongoing Master's research at the Instituto Federal da Paraíba (IFPB). The project focuses on machine learning applications for cybersecurity, specifically addressing the unique constraints and behavioral patterns of IoMT devices operating over private 5G networks.
 
 ## Contact
 **Ygor Gesteira**  
