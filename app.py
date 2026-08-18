@@ -25,28 +25,29 @@ st.set_page_config(
 )
 
 # --- 2. Targeted CSS to KILL all Blue & Force Black/Purple ---
-# This block injects custom CSS directly into the HTML to override Streamlit defaults
+## This block injects custom CSS directly into the HTML to override Streamlit defaults
 st.markdown(
     """
     <style>
-    /* Hide ONLY the top-right toolbar (GitHub, Star, Share icons) */
-    /* This keeps the sidebar toggle arrow visible when the screen is narrow */
-    [data-testid="stToolbar"] {
-        visibility: hidden;
-        display: none;
+    /* Hide ONLY the right-side action menu (GitHub, Star, Menu) */
+    [data-testid="stHeaderActionElements"] {
+        display: none !important;
+    }
+    #MainMenu {
+        display: none !important;
     }
     
-    /* Make the rest of the header transparent so it blends into the black background */
+    /* Keep the header itself transparent so the > button shows perfectly */
     [data-testid="stHeader"] {
         background-color: transparent !important;
     }
     
-    /* Force monospace font across all text elements in the app */
+    /* Force monospace font */
     html, body, [class*="css"] {
         font-family: monospace !important;
     }
     
-    /* Force ALL hyperlinks to use the custom muted purple, removing default blue */
+    /* Force ALL links to the muted purple, NO BLUE */
     a, a:hover, a:visited, a:active {
         color: #484aaa !important;
         text-decoration: none !important;
@@ -55,13 +56,13 @@ st.markdown(
         text-decoration: underline !important;
     }
     
-    /* Force the upload dashed box icon and text to use the custom muted purple */
+    /* Force the upload icon and text to muted purple */
     [data-testid="stFileUploadDropzone"] * {
         color: #484aaa !important;
         fill: #484aaa !important;
     }
     
-    /* Apply violet accents specifically for inline code tags like .pcap and .csv */
+    /* Violet accents for inline code (.pcap, .csv) */
     code {
         color: #dabcff !important;
         background-color: #111111 !important;
