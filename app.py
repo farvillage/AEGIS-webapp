@@ -24,22 +24,24 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- 2. Targeted CSS to KILL all Blue & Force Black/Purple ---
 ## This block injects custom CSS directly into the HTML to override Streamlit defaults
+# --- 2. Targeted CSS to KILL all Blue & Force Black/Purple ---
 st.markdown(
     """
     <style>
-    /* Hide ONLY the right-side action menu (GitHub, Star, Menu) */
-    [data-testid="stHeaderActionElements"] {
-        display: none !important;
+    /* Make the header transparent */
+    [data-testid="stHeader"] {
+        background-color: transparent !important;
     }
-    #MainMenu {
+    
+    /* MAGIC BULLET: Hide everything inside the header EXCEPT the first item (the sidebar toggle arrow) */
+    [data-testid="stHeader"] > div:not(:first-child) {
         display: none !important;
     }
     
-    /* Keep the header itself transparent so the > button shows perfectly */
-    [data-testid="stHeader"] {
-        background-color: transparent !important;
+    /* Catch-all to hide the standard Streamlit menu */
+    #MainMenu {
+        display: none !important;
     }
     
     /* Force monospace font */
