@@ -6,7 +6,6 @@ from PIL import Image
 from pcap_parser import extract_features_from_pcap
 
 # --- 1. Page Configuration ---
-# This restores the icon in your browser tab
 icon = Image.open("aegisicon.png")
 st.set_page_config(
     page_title="Aegis",
@@ -15,13 +14,33 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- 2. Targeted CSS for Font & Violet Accents ---
+# --- 2. Targeted CSS for UI Clean-up & Colors ---
 st.markdown(
     """
     <style>
+    /* Hide the top-right Streamlit menu, share button, and GitHub icon */
+    [data-testid="stHeader"] {
+        visibility: hidden;
+    }
+    
     /* Force monospace font across the app */
     html, body, [class*="css"] {
         font-family: monospace !important;
+    }
+    
+    /* Change link colors (like the email in About Me) to the requested muted purple */
+    a {
+        color: #484aaa !important;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Change the file uploader upload icon to the muted purple */
+    [data-testid="stFileUploadDropzone"] svg {
+        color: #484aaa !important;
+        fill: #484aaa !important;
     }
     
     /* Violet accents specifically for inline code like `.pcap` and `.csv` */
@@ -51,11 +70,11 @@ with st.sidebar:
             **Ygor Gesteira**  
             *Master's Researcher @ Instituto Federal da Paraíba (IFPB)*
             
-            Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Industrial IoT (IIoT) and Internet of Medical Things (IoMT) over private 5G networks.
+            Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Internet of Medical Things (IoMT) over private 5G networks.
             
             *"I found it is the small everyday deeds of ordinary folk that keep the darkness at bay."* - J.R.R. Tolkien
             
-            ygorgesteira@gmail.com
+            [ygorgesteira@gmail.com](mailto:ygorgesteira@gmail.com)
             """
         )
 
