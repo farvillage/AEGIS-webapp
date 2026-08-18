@@ -65,7 +65,7 @@ with st.sidebar:
     st.markdown("## Navigation & Controls")
     
     # This creates a clean dropdown box for your personal bio
-    with st.expander("👨‍💻 About the Developer"):
+    with st.expander("About the Developer"):
         st.markdown(
             """
             **Ygor Gesteira**  
@@ -75,7 +75,7 @@ with st.sidebar:
             
             *"I found it is the small everyday deeds of ordinary folk that keep the darkness at bay."*
             
-            📫 [ygorgesteira@gmail.com](mailto:ygorgesteira@gmail.com)
+            [ygorgesteira@gmail.com](mailto:ygorgesteira@gmail.com)
             """
         )
 
