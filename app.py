@@ -2,69 +2,22 @@ import os
 import pandas as pd
 import streamlit as st
 import joblib
-from PIL import Image
 from pcap_parser import extract_features_from_pcap
 
 # --- 1. Page Configuration ---
-icon = Image.open("aegisicon.png")
 st.set_page_config(
     page_title="Aegis | Behavioral Intrusion Detection",
-    page_icon=icon,
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- 2. Brute-Force Purple Theme (CSS Injection) ---
-st.markdown(
-    """
-    <style>
-    /* Force main background and text colors */
-    .stApp {
-        background-color: #0b0f19 !important;
-        color: #e2e8f0 !important;
-        font-family: monospace !important;
-    }
-    /* Force sidebar background */
-    [data-testid="stSidebar"] {
-        background-color: #131b2e !important;
-    }
-    /* Force sophisticated purple on primary buttons/uploaders */
-    div.stButton > button:first-child, .stFileUploader > div > button {
-        background-color: #6B21A8 !important;
-        color: #ffffff !important;
-        border: 1px solid #6B21A8 !important;
-        font-family: monospace !important;
-    }
-    /* Hover effect for buttons */
-    div.stButton > button:first-child:hover, .stFileUploader > div > button:hover {
-        background-color: #8B5CF6 !important;
-        border: 1px solid #8B5CF6 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# --- 2. Simple Header ---
+st.title("Aegis")
+st.markdown("Real-time intrusion detection for private 5G edge networks.")
+st.markdown("Upload raw network captures (`.pcap`) or processed datasets (`.csv`) from medical sensors to detect malicious behavioral anomalies instantly.")
 
-# --- 3. Skrive-Inspired Header ---
-st.markdown(
-    """
-    <div style='text-align: center; padding-bottom: 2rem;'>
-        <h1 style='color: #6B21A8; font-family: monospace; font-size: 3.5rem; margin-bottom: 0;'>🛡️ Aegis</h1>
-        <h3 style='color: #e2e8f0; font-family: monospace; font-weight: normal; margin-top: 0.5rem;'>
-            Real-time intrusion detection for private 5G edge networks.
-        </h3>
-        <p style='color: #94a3b8; font-size: 1.1rem; max-width: 600px; margin: 0 auto;'>
-            Upload raw network captures (<code>.pcap</code>) or processed datasets (<code>.csv</code>) 
-            from medical sensors to detect malicious behavioral anomalies instantly.
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# --- 4. About Me (Sidebar) ---
+# --- 3. About Me (Sidebar) ---
 with st.sidebar:
-    st.image("aegisicon.png", width=100)
     st.markdown("## Navigation & Controls")
     
     with st.expander("About the Developer"):
@@ -73,22 +26,22 @@ with st.sidebar:
             **Ygor Gesteira**  
             *Master's Researcher @ Instituto Federal da Paraíba (IFPB)*
             
-            Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Industrial IoT (IIoT) and Internet of Medical Things (IoMT) over private 5G networks.
+            Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Internet of Medical Things (IoMT) over private 5G networks.
             
             *"I found it is the small everyday deeds of ordinary folk that keep the darkness at bay."* - J.R.R. Tolkien
             
-            [ygorgesteira@gmail.com](mailto:ygorgesteira@gmail.com)
+            ygorgesteira@gmail.com
             """
         )
 
-# --- 5. Load Model ---
+# --- 4. Load Model ---
 @st.cache_resource
 def load_model():
     return joblib.load('aegis_wustl_model.pkl')
 
 model = load_model()
 
-# --- 6. File Uploader Logic ---
+# --- 5. File Uploader Logic ---
 uploaded_file = st.file_uploader(
     "Upload Network Traffic Capture", 
     type=["pcap", "pcapng", "csv"]
