@@ -5,9 +5,13 @@ import os
 from pcap_parser import extract_features_from_pcap
 
 # 1. Page Configuration
-st.set_page_config(page_title="Aegis - IoMT Threat Detection", layout="wide")
-st.title("Aegis: IoMT Behavioral Intrusion Detection")
-st.markdown("Upload raw network captures (`.pcap`) from medical sensors or private 5G edge networks to detect malicious traffic in real time.")
+import streamlit as st
+st.set_page_config(
+    page_title="Aegis",
+    page_icon="aegisicon.png",  # You can use an emoji (e.g., 🛡️, 🔒, ⚡) or a link to an image file (.png/.ico)
+    layout="wide",     # Expands the dashboard layout to use the full screen width
+    initial_sidebar_state="expanded"
+)
 
 # 2. Load Model
 @st.cache_resource
