@@ -29,12 +29,23 @@ def load_model():
 model = load_model()
 
 # 3. File Uploader
-uploaded_file = st.file_uploader("Upload Network Traffic Capture (.pcap)", type=["pcap", "pcapng"])
+# Allow both PCAP and CSV for testing purposes
+uploaded_file = st.file_uploader(
+    "Upload Network Traffic Capture", 
+    type=["pcap", "pcapng", "csv"]
+)
 
 if uploaded_file is not None:
-    temp_file_path = "temp_capture.pcap"
-    with open(temp_file_path, "wb") as f:
-        f.write(uploaded_file.getbuffer())
+    if uploaded_file.name.endswith('.csv'):
+        # Load the CSV directly into a Pandas DataFrame and pass it to the model
+        import pandas as pd
+        df = pd.read_csv(uploaded_file)
+        st.success("CSV loaded! Ready for ML inference.")
+        # Insert your ML prediction code here
+        
+    elif uploaded_file.name.endswith(('.pcap', '.pcapng')):
+        # Run your normal pcap_parser.py logic
+        st.info("Parsing PCAP file...")
     
     with st.spinner("Extracting packets via Scapy..."):
         df_packets = extract_features_from_pcap(temp_file_path)
