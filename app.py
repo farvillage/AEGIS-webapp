@@ -14,39 +14,40 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- 2. Targeted CSS for UI Clean-up & Colors ---
+# --- 2. Targeted CSS to KILL all Blue & Force Black/Purple ---
 st.markdown(
     """
     <style>
-    /* Hide the top-right Streamlit menu, share button, and GitHub icon */
+    /* Hide the top-right menu */
     [data-testid="stHeader"] {
         visibility: hidden;
     }
     
-    /* Force monospace font across the app */
+    /* Force monospace font */
     html, body, [class*="css"] {
         font-family: monospace !important;
     }
     
-    /* Change link colors (like the email in About Me) to the requested muted purple */
-    a {
+    /* Force ALL links to the muted purple, NO BLUE */
+    a, a:hover, a:visited, a:active {
         color: #484aaa !important;
-        text-decoration: none;
+        text-decoration: none !important;
     }
     a:hover {
-        text-decoration: underline;
+        text-decoration: underline !important;
     }
     
-    /* Change the file uploader upload icon to the muted purple */
-    [data-testid="stFileUploadDropzone"] svg {
+    /* Force the upload icon and text to muted purple */
+    [data-testid="stFileUploadDropzone"] * {
         color: #484aaa !important;
         fill: #484aaa !important;
     }
     
-    /* Violet accents specifically for inline code like `.pcap` and `.csv` */
+    /* Violet accents for inline code (.pcap, .csv) */
     code {
         color: #dabcff !important;
-        background-color: rgba(218, 188, 255, 0.1) !important;
+        background-color: #111111 !important;
+        border: 1px solid #484aaa !important;
         padding: 0.2em 0.4em;
         border-radius: 3px;
     }
