@@ -6,17 +6,21 @@ from pcap_parser import extract_features_from_pcap
 
 # 1. Page Configuration
 import streamlit as st
-# 1. Page Configuration (This handles the browser tab and icon)
+import streamlit as st
+from PIL import Image
+
+# 1. Page Configuration
+icon = Image.open("aegisicon.png")
 st.set_page_config(
     page_title="Aegis",
-    page_icon="aegisicon.png",  # Make sure aegisicon.png is pushed to GitHub!
+    page_icon=icon,
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# 2. Page Headers (This draws the actual text on the screen)
 st.title("Aegis | IoMT Threat Intelligence")
 st.markdown("Upload raw network captures (`.pcap`) from medical sensors or private 5G edge networks to detect malicious traffic in real time.")
+
 # 2. Load Model
 @st.cache_resource
 def load_model():
