@@ -2,21 +2,46 @@ import os
 import pandas as pd
 import streamlit as st
 import joblib
+from PIL import Image
 from pcap_parser import extract_features_from_pcap
 
 # --- 1. Page Configuration ---
+# This restores the icon in your browser tab
+icon = Image.open("aegisicon.png")
 st.set_page_config(
-    page_title="Aegis | Behavioral Intrusion Detection",
+    page_title="Aegis",
+    page_icon=icon,
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- 2. Simple Header ---
+# --- 2. Targeted CSS for Font & Violet Accents ---
+st.markdown(
+    """
+    <style>
+    /* Force monospace font across the app */
+    html, body, [class*="css"] {
+        font-family: monospace !important;
+    }
+    
+    /* Violet accents specifically for inline code like `.pcap` and `.csv` */
+    code {
+        color: #dabcff !important;
+        background-color: rgba(218, 188, 255, 0.1) !important;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# --- 3. Simple Header ---
 st.title("Aegis")
 st.markdown("Real-time intrusion detection for private 5G edge networks.")
 st.markdown("Upload raw network captures (`.pcap`) or processed datasets (`.csv`) from medical sensors to detect malicious behavioral anomalies instantly.")
 
-# --- 3. About Me (Sidebar) ---
+# --- 4. About Me (Sidebar) ---
 with st.sidebar:
     st.markdown("## Navigation & Controls")
     
@@ -26,7 +51,7 @@ with st.sidebar:
             **Ygor Gesteira**  
             *Master's Researcher @ Instituto Federal da Paraíba (IFPB)*
             
-            Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Internet of Medical Things (IoMT) over private 5G networks.
+            Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Industrial IoT (IIoT) and Internet of Medical Things (IoMT) over private 5G networks.
             
             *"I found it is the small everyday deeds of ordinary folk that keep the darkness at bay."* - J.R.R. Tolkien
             
@@ -34,14 +59,14 @@ with st.sidebar:
             """
         )
 
-# --- 4. Load Model ---
+# --- 5. Load Model ---
 @st.cache_resource
 def load_model():
     return joblib.load('aegis_wustl_model.pkl')
 
 model = load_model()
 
-# --- 5. File Uploader Logic ---
+# --- 6. File Uploader Logic ---
 uploaded_file = st.file_uploader(
     "Upload Network Traffic Capture", 
     type=["pcap", "pcapng", "csv"]
