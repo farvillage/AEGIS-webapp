@@ -25,31 +25,36 @@ st.set_page_config(
 )
 
 ## This block injects custom CSS directly into the HTML to override Streamlit defaults
-# --- 2. Targeted CSS to KILL all Blue & Force Black/Purple ---
+# --- 2. Targeted CSS to KILL all Blue, Toolbars, & Cloud Badges ---
 st.markdown(
     """
     <style>
-    /* Make the header transparent */
+    /* 1. Make the header background transparent so it doesn't block the app */
     [data-testid="stHeader"] {
         background-color: transparent !important;
     }
     
-    /* MAGIC BULLET: Hide everything inside the header EXCEPT the first item (the sidebar toggle arrow) */
-    [data-testid="stHeader"] > div:not(:first-child) {
+    /* 2. Annihilate the Streamlit Cloud Toolbar (Share, Star, Edit, GitHub) */
+    /* The header is a flexbox. Child 1 is the sidebar toggle. We permanently hide all other children. */
+    [data-testid="stHeader"] > div > div:not(:first-child) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+
+    /* 3. Aggressive fallback: destroy any stray links or buttons inside the header */
+    /* that aren't specifically the sidebar collapse control */
+    [data-testid="stHeader"] a, 
+    [data-testid="stHeader"] button:not([data-testid="collapsedControl"]):not([kind="headerNoPadding"]) {
         display: none !important;
     }
-    
-    /* Catch-all to hide the standard Streamlit menu */
-    #MainMenu {
-        display: none !important;
-    }
-    
-    /* Force monospace font */
+
+    /* 4. Force monospace font across the entire app */
     html, body, [class*="css"] {
         font-family: monospace !important;
     }
     
-    /* Force ALL links to the muted purple, NO BLUE */
+    /* 5. Force ALL your links (like the sidebar email) to the muted purple */
     a, a:hover, a:visited, a:active {
         color: #484aaa !important;
         text-decoration: none !important;
@@ -58,13 +63,13 @@ st.markdown(
         text-decoration: underline !important;
     }
     
-    /* Force the upload icon and text to muted purple */
+    /* 6. Force the upload icon and text to muted purple */
     [data-testid="stFileUploadDropzone"] * {
         color: #484aaa !important;
         fill: #484aaa !important;
     }
     
-    /* Violet accents for inline code (.pcap, .csv) */
+    /* 7. Violet accents specifically for inline code tags (.pcap, .csv) */
     code {
         color: #dabcff !important;
         background-color: #111111 !important;
@@ -76,7 +81,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 # --- 3. Simple Header ---
 # The main title and description shown at the top of the page
 st.title("Aegis")
