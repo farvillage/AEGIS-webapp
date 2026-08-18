@@ -104,15 +104,36 @@ if uploaded_file is not None:
         st.warning("No valid IP packets detected in the uploaded capture.")
 
 # 4. Styling
-st.markdown("""
+# --- Force Custom UI Theme via CSS ---
+st.markdown(
+    """
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* Force main background and text color */
+    .stApp {
+        background-color: #0b0f19 !important;
+        color: #e2e8f0 !important;
+        font-family: monospace !important;
+    }
+    
+    /* Force sidebar background */
+    [data-testid="stSidebar"] {
+        background-color: #131b2e !important;
+    }
+    
+    /* Force sophisticated purple on buttons */
     div.stButton > button:first-child {
-        background-color: #0d1117;
-        color: #ffffff;
-        border: 1px solid #30363d;
-        border-radius: 6px;
+        background-color: #6B21A8 !important;
+        color: #ffffff !important;
+        border: 1px solid #6B21A8 !important;
+        font-family: monospace !important;
+    }
+    
+    /* Hover effect for buttons */
+    div.stButton > button:first-child:hover {
+        background-color: #8B5CF6 !important;
+        border: 1px solid #8B5CF6 !important;
     }
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
