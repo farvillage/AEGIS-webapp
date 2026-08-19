@@ -4,6 +4,7 @@ import os
 # Import data manipulation and web framework libraries
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 # Import joblib for loading the pre-trained machine learning model
 import joblib
@@ -22,6 +23,26 @@ st.set_page_config(
     page_icon=icon,
     layout="wide",
     initial_sidebar_state="expanded"
+)
+
+# --- 1.1 Browser Tab Title Cleanup ---
+# Injects a MutationObserver to strip the trailing "· Streamlit"
+components.html(
+    """
+    <script>
+        const observer = new MutationObserver((mutations, obs) => {
+            const title = window.parent.document.querySelector('title') || document.querySelector('title');
+            if (title && title.innerText.includes('· Streamlit')) {
+                title.innerText = title.innerText.replace(' · Streamlit', '').replace(' · Streamlit', '');
+                obs.disconnect();
+            }
+        });
+        const target = window.parent.document.querySelector('head') || document.querySelector('head') || document;
+        observer.observe(target, { subtree: true, childList: true });
+    </script>
+    """,
+    height=0,
+    width=0
 )
 
 # --- 2. Targeted CSS to KILL all Blue, Toolbars, & Cloud Badges ---
@@ -99,7 +120,7 @@ with st.sidebar:
             **Ygor Gesteira**  
             *Master's Researcher @ Instituto Federal da Paraíba (IFPB)*
             
-            Currently developing Aegis as part of my Master's research, focusing on machine learning applications for cybersecurity in Internet of Medical Things (IoMT) over private 5G networks.
+            Currently developing AEGIS as part of my Master's research, focusing on machine learning applications for cybersecurity in Internet of Medical Things (IoMT) over private 5G networks.
             
             *"With great power comes great responsibility"* - Stan Lee
             
