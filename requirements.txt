@@ -1,5 +1,0 @@
-streamlit
-pandas
-scikit-learn
-scapy
-git+https://github.com/farvillage/aegis-standardizer.git
