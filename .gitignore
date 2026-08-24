@@ -1,4 +1,6 @@
 __pycache__/
-*.pcap
-*.pcapng
+*.pyc
+.env
 .DS_Store
+.venv/
+env/
