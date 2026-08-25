@@ -99,7 +99,7 @@ with st.sidebar:
         )
 
 # Backend API URL (FastAPI)
-API_URL = "http://127.0.0.1:8000"
+API_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 # --- 5. File Uploader & API Client Logic ---
 uploaded_file = st.file_uploader(
