@@ -1,64 +1,60 @@
-# AEGIS
+# AEGIS Web Intelligence Engine
 
-Real-time intrusion detection for private 5G edge networks.
+Real-time intrusion detection and behavioral anomaly analysis platform for private 5G edge networks and Internet of Medical Things (IoMT) environments.
 
 ## Overview
+AEGIS is an advanced machine learning cybersecurity framework designed to protect private 5G slicing architectures. This web application variant serves as an operator dashboard deployed via cloud infrastructure, capable of ingesting raw packet captures (.pcap, .pcapng) or pre-processed sensor telemetry datasets (.csv) to perform instant threat classification via optimized Random Forest models.
 
-AEGIS is an intelligent threat detection and behavioral analysis framework designed for private 5G edge networks, evaluating telemetry from Industrial IoT (IIoT) and Internet of Medical Things (IoMT) environments.
+## Core Architecture
 
-## Architectural Overview
+    Frontend: Built with Streamlit, providing an interactive dark-mode operator UI, telemetry metrics overview, and automated threat report logs.
 
-AEGIS utilizes a decoupled client-server architecture:
+    Backend: Built with FastAPI, handling asynchronous file routing, Scapy-based network packet parsing, and feature extraction.
 
-- **Backend (/backend):** Built with FastAPI, handling high-performance model inference, IP/feature translation schemas, and real-time threat evaluation via a pre-trained Random Forest pipeline.
-- **Frontend (/frontend):** Built with Streamlit, providing an interactive dark-themed operator dashboard for metrics visualization, CSV/PCAP ingestion, and threat report generation.
+    Inference Engine: Powered by a pre-trained Random Forest model (aegis_wustl_model.pkl) trained on benchmarks such as the WUSTL-EHMS-2020 dataset.
 
-## Core Features
+## Project Structure
 
-- **Dual Input Support:** Process raw packet captures (`.pcap`, `.pcapng`) or pre-aggregated flow datasets (`.csv`).
-- **Automated Packet Parsing:** Utilizes Scapy to extract raw packet data and group it into standardized network flows based on source/destination IPs, ports, and protocols.
-- **Feature Engineering & Alignment:** Automatically translates and maps incoming dataset features to standardized model expectations, handling IP-to-numeric encoding safely.
-- **Real-time Threat Inference:** Leverages a pre-trained Random Forest model (`aegis_wustl_model.pkl`) via the backend API to classify flows as normal traffic or flag malicious attacks instantly.
-- **Operator Dashboard:** Built with Streamlit in a decoupled structure, featuring a custom, distraction-free piano black interface.
-
-## Technologies Used
-
-- **Core:** Python, FastAPI, Uvicorn
-- **Frontend/UI:** Streamlit
-- **Data Processing:** Pandas, Scapy, Joblib
-- **Machine Learning:** Scikit-Learn
-
-## Installation and Running
-
-1. **Clone the repository:**
-
-```bash
-git clone https://github.com/ygorgesteira/AEGIS.git
-cd AEGIS
+```
+AEGIS-webapp/
+│
+├── backend/
+│   ├── main.py (FastAPI application endpoints)
+│   ├── model.py (Feature alignment and ML inference pipeline)
+│   └── parser.py (Scapy packet-to-flow aggregation logic)
+│
+├── frontend/
+│   └── app.py (Streamlit web operator dashboard)
+│
+├── .streamlit/
+│   └── config.toml (Global theme and color configuration)
+│
+├── aegis_wustl_model.pkl (Pre-trained Random Forest model weights)
+├── aegisicon.png (Application branding icon)
+├── requirements.txt (Python dependencies)
+└── render.yaml (Cloud deployment blueprint)
 ```
 
-2. **Start the FastAPI Backend:**
+## Local Setup & Installation
 
-In your first terminal window, launch the backend API server:
+    Clone the repository:
+    git clone https://github.com/farvillage/AEGIS-webapp.git
+    cd AEGIS-webapp
 
-```bash
-uvicorn backend.main:app --reload --port 8000
-```
+    Install dependencies:
+    pip install -r requirements.txt
 
-3. **Launch the Streamlit Frontend:**
+    Run the application locally:
 
-In your second terminal window, run the UI client:
+        Start the FastAPI backend server:
+        uvicorn backend.main:app --reload --port 8000
 
-```bash
-streamlit run frontend/app.py
-```
+        In a separate terminal window, launch the Streamlit frontend:
+        streamlit run frontend/app.py
 
-## About the Project
+## Author
+Ygor Gesteira
 
-AEGIS is developed by Ygor Gesteira as part of ongoing Master's research at the Instituto Federal da Paraíba (IFPB). The project focuses on machine learning applications for cybersecurity, specifically addressing the unique constraints and behavioral patterns of IoMT devices operating over private 5G networks.
+Master's Researcher @ Instituto Federal da Paraíba (IFPB)
 
-## Contact
-
-**Ygor Gesteira**
-
-ygorgesteira@gmail.com
+Focusing on machine learning applications for cybersecurity in Internet of Medical Things (IoMT) over private 5G networks.
