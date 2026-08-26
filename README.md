@@ -1,4 +1,4 @@
-# AEGIS Web Intelligence Engine
+# AEGIS Web Application
 
 Real-time intrusion detection and behavioral anomaly analysis platform for private 5G edge networks and Internet of Medical Things (IoMT) environments.
 
@@ -7,11 +7,9 @@ AEGIS is an advanced machine learning cybersecurity framework designed to protec
 
 ## Core Architecture
 
-    Frontend: Built with Streamlit, providing an interactive dark-mode operator UI, telemetry metrics overview, and automated threat report logs.
-
-    Backend: Built with FastAPI, handling asynchronous file routing, Scapy-based network packet parsing, and feature extraction.
-
-    Inference Engine: Powered by a pre-trained Random Forest model (aegis_wustl_model.pkl) trained on benchmarks such as the WUSTL-EHMS-2020 dataset.
+- Frontend: Built with Streamlit, providing an interactive dark-mode operator UI, telemetry metrics overview, and automated threat report logs.
+- Backend: Built with FastAPI, handling asynchronous file routing, Scapy-based network packet parsing, and feature extraction.
+- Inference Engine: Powered by a pre-trained Random Forest model (aegis_wustl_model.pkl) trained on benchmarks such as the WUSTL-EHMS-2020 dataset.
 
 ## Project Structure
 
@@ -37,20 +35,30 @@ AEGIS-webapp/
 
 ## Local Setup & Installation
 
-    Clone the repository:
-    git clone https://github.com/farvillage/AEGIS-webapp.git
-    cd AEGIS-webapp
+1. Clone the repository:
+```    
+bash
+git clone https://github.com/farvillage/AEGIS-webapp.git
+cd AEGIS-webapp
+```    
 
-    Install dependencies:
-    pip install -r requirements.txt
+2. Install dependencies:
+```
+bash
+pip install -r requirements.txt
+```
 
-    Run the application locally:
+3. Start the FastAPI backend server:
+```
+bash
+uvicorn backend.main:app --reload --port 8000
+```
 
-        Start the FastAPI backend server:
-        uvicorn backend.main:app --reload --port 8000
-
-        In a separate terminal window, launch the Streamlit frontend:
-        streamlit run frontend/app.py
+4. In a separate terminal window, launch the Streamlit frontend:
+```
+bash
+streamlit run frontend/app.py
+```
 
 ## Author
 Ygor Gesteira
